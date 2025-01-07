@@ -44,14 +44,18 @@ for i in range(20):
         if pulp.value(x[i][j]) == 1:
             u[j] += [S[i][0]]
 print("Objective Value:", pulp.value(prob.objective))
-print("Objective Value:", pulp.value(prob.objective))
 print(u)
+
+#checks whether anyone put a really low second highest ranking
 for i in range (20):
     g = list(S[i][1])
     largest = max(S[i][1])
     g.remove(largest)
     if max(g) <= 15:
         print (f" {S[i][0]} gamed the system")
+
+#checks whether anyone put a really low highest ranking
 for i in range (20):
     if max(S[i][1]) <= 20:
         print (f" {S[i][0]} could be being punished for being fair")
+        
