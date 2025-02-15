@@ -5,7 +5,7 @@ import pandas as pd
 data = pd.read_csv('consultant_scores.csv')
 rankings = data.iloc[:, 1:].values.tolist()
 names = data['Name'].tolist()
-projects = ["AHA", "Rio tinto", "Komen", "bonterra", "heart"]
+projects = ["Salvation", "Biogen", "GoodRX", "Life360", "Concern"]
 
 # this just says that this is a maximization problem, I gave it a dumb name
 prob = pulp.LpProblem("GoldenCrown", pulp.LpMaximize)
