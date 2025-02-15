@@ -1,6 +1,8 @@
 import pulp
 import pandas as pd
+import csv
 
+#"I understand this is nerdy as shit but fuck it" -- Samuel Rogers 2/15/25
 #this code takes the csv and makes it a matrix and then makes the projects
 data = pd.read_csv('consultant_scores.csv')
 rankings = data.iloc[:, 1:].values.tolist()
@@ -62,3 +64,76 @@ for i in range (20):
 for i in range (20):
     if max(S[i][1]) <= 21:
         print (f" {S[i][0]} could be being punished for being fair")
+
+
+#rankings by person (there is a way to make this way faster, I did 3 separate csv's for first
+#second and third, but it works for now, will make better over the semester)
+firstchoice = {}
+for j in range(5):
+    firstchoice[projects[j]] = []
+for i in range (20):
+    highest = max(S[i][1])
+    for z in range(len(S[i][1])):
+        if S[i][1][z] == highest:
+            firstchoice[projects[z]] += [names[i]]
+
+with open("firstchoice.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    
+    # Write the header (project names)
+    writer.writerow(firstchoice.keys())
+    
+    # Write rows dynamically
+    for i in range(20):
+        row = [firstchoice[proj][i] if i < len(firstchoice[proj]) else "" for proj in firstchoice]
+        writer.writerow(row)
+
+#rankings by person
+secondchoice = {}
+for j in range(5):
+    secondchoice[projects[j]] = []
+for i in range (20):
+    firsts = S[i][1]
+    highest = max(firsts)
+    firsts.remove(highest)
+    highest = max(firsts)
+    for z in range(len(S[i][1])):
+        if S[i][1][z] == highest:
+            secondchoice[projects[z]] += [names[i]]
+
+
+with open("secondchoice.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    
+    # Write the header (project names)
+    writer.writerow(secondchoice.keys())
+    
+    # Write rows dynamically
+    for i in range(20):
+        row = [secondchoice[proj][i] if i < len(secondchoice[proj]) else "" for proj in secondchoice]
+        writer.writerow(row)
+
+thirdchoice = {}
+for j in range(5):
+    thirdchoice[projects[j]] = []
+for i in range (20):
+    firsts = S[i][1]
+    highest = max(firsts)
+    firsts.remove(highest)
+    highest = max(firsts)
+    firsts.remove(highest)
+    highest = max(firsts)
+    for z in range(len(S[i][1])):
+        if S[i][1][z] == highest:
+            thirdchoice[projects[z]] += [names[i]]
+    
+with open("thirdchoice.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    
+    # Write the header (project names)
+    writer.writerow(thirdchoice.keys())
+    
+    # Write rows dynamically
+    for i in range(20):
+        row = [thirdchoice[proj][i] if i < len(thirdchoice[proj]) else "" for proj in thirdchoice]
+        writer.writerow(row)
