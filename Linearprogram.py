@@ -50,7 +50,7 @@ print(u)
 
 # Puts the results in a csv
 finaloutput = pd.DataFrame(u)
-finaloutput.to_csv("output_table.csv", index=False)
+finaloutput.to_csv("output/output_table.csv", index=False)
 
 #checks whether anyone put a really low second highest ranking
 for i in range (20):
@@ -78,7 +78,7 @@ for i in range (20):
         if rankinglist[z] == highest:
             firstchoice[projects[z]] += [f" {names[i]}  {highest}"]
 
-with open("firstchoice.csv", "w", newline="") as file:
+with open("output/firstchoice.csv", "w", newline="") as file:
     writer = csv.writer(file)
     
     # Write the header (project names)
@@ -105,7 +105,7 @@ for i in range (20):
             secondchoice[projects[z]] += [f" {names[i]}  {highest}"]
 
 
-with open("secondchoice.csv", "w", newline="") as file:
+with open("output/secondchoice.csv", "w", newline="") as file:
     writer = csv.writer(file)
     
     # Write the header (project names)
@@ -134,12 +134,12 @@ for i in range (20):
         if S[i][1][z] == highest:
             thirdchoice[projects[z]] += [f" {names[i]}  {highest}"]
     
-with open("thirdchoice.csv", "w", newline="") as file:
+with open("output/thirdchoice.csv", "w", newline="") as file:
     writer = csv.writer(file)
     
     # Write the header (project names)
     writer.writerow(thirdchoice.keys())
-    
+
     # Write rows dynamically
     for i in range(20):
         row = [thirdchoice[proj][i] if i < len(thirdchoice[proj]) else "" for proj in thirdchoice]
