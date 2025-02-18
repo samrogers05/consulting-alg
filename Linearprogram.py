@@ -4,7 +4,7 @@ import csv
 
 #"I understand this is nerdy as shit but fuck it" -- Samuel Rogers 2/15/25
 #this code takes the csv and makes it a matrix and then makes the projects
-data = pd.read_csv('consultant_scores.csv')
+data = pd.read_csv('consultant_scores2.csv')
 rankings = data.iloc[:, 1:].values.tolist()
 names = data['Name'].tolist()
 projects = ["Salvation", "Biogen", "GoodRX", "Life360", "Concern"]
@@ -26,7 +26,7 @@ for i in range(20):
 
 for i in range(20):
     for j in range(5):
-        prob += S[i][1][j] * x[i][j] >= 20 * x[i][j]
+        prob += S[i][1][j] * x[i][j] >= 25 * x[i][j]
     
 
 for j in range(5):
@@ -73,9 +73,10 @@ for j in range(5):
     firstchoice[projects[j]] = []
 for i in range (20):
     highest = max(S[i][1])
-    for z in range(len(S[i][1])):
-        if S[i][1][z] == highest:
-            firstchoice[projects[z]] += [names[i]]
+    rankinglist = list(S[i][1])
+    for z in range(len(rankinglist)):
+        if rankinglist[z] == highest:
+            firstchoice[projects[z]] += [f" {names[i]}  {highest}"]
 
 with open("firstchoice.csv", "w", newline="") as file:
     writer = csv.writer(file)
@@ -93,13 +94,15 @@ secondchoice = {}
 for j in range(5):
     secondchoice[projects[j]] = []
 for i in range (20):
-    firsts = S[i][1]
+    firsts = list(S[i][1])
     highest = max(firsts)
-    firsts.remove(highest)
+    for h in range (5):
+        if firsts[h] == highest:
+            firsts[h] = 0
     highest = max(firsts)
     for z in range(len(S[i][1])):
         if S[i][1][z] == highest:
-            secondchoice[projects[z]] += [names[i]]
+            secondchoice[projects[z]] += [f" {names[i]}  {highest}"]
 
 
 with open("secondchoice.csv", "w", newline="") as file:
@@ -117,15 +120,19 @@ thirdchoice = {}
 for j in range(5):
     thirdchoice[projects[j]] = []
 for i in range (20):
-    firsts = S[i][1]
+    firsts = list(S[i][1])
     highest = max(firsts)
-    firsts.remove(highest)
+    for h in range (5):
+        if firsts[h] == highest:
+            firsts[h] = 0
     highest = max(firsts)
-    firsts.remove(highest)
+    for b in range (5):
+        if firsts[b] == highest:
+            firsts[b] = 0
     highest = max(firsts)
     for z in range(len(S[i][1])):
         if S[i][1][z] == highest:
-            thirdchoice[projects[z]] += [names[i]]
+            thirdchoice[projects[z]] += [f" {names[i]}  {highest}"]
     
 with open("thirdchoice.csv", "w", newline="") as file:
     writer = csv.writer(file)
